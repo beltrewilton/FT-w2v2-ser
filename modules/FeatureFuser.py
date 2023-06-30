@@ -43,6 +43,7 @@ class Wav2vecWrapper(nn.Module):
                     min_masks=2,
                     # device=x.device
                 )
+                mask_time_indices = torch.from_numpy(mask_time_indices).to(x.device)
                 masked_indicies = mask_time_indices
                 flip_mask = torch.rand((batch_size, sequence_length), device=masked_indicies.device) > self.observe_time_prob
                 wav2vec_z[masked_indicies & flip_mask] = 0.
@@ -55,6 +56,7 @@ class Wav2vecWrapper(nn.Module):
                     # device=x.device,
                     min_masks=1
                 )
+                mask_feature_indices = torch.from_numpy(mask_feature_indices).to(x.device)
                 wav2vec_z[mask_feature_indices[:, None].expand(-1, sequence_length, -1)] = 0
             wav2vec_z = wav2vec_z.transpose(1, 2)
         wav2vec_c = self.wav2vec.feature_aggregator(wav2vec_z)
@@ -160,6 +162,7 @@ class Wav2vec2Wrapper(nn.Module):
                         # device=x.device,
                         min_masks=1
                     )
+                    mask_feature_indices = torch.from_numpy(mask_feature_indices).to(x.device)
                     x[mask_feature_indices[:, None].expand(-1, sequence_length, -1)] = 0
         x = self.wav2vec2.encoder(x, attention_mask=mask)[0]
         reps = F.relu(x)
@@ -207,6 +210,7 @@ class Wav2vec2PretrainWrapper(nn.Module):
                 # device=x.device,
                 attention_mask=attn_mask
             )
+            mask_time_indices = torch.from_numpy(mask_time_indices).to(x.device)
         x = self.wav2vec2PT(x, mask_time_indices=mask_time_indices)#, attention_mask=attn_mask)
         return x
 
