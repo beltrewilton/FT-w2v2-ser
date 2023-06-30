@@ -134,6 +134,7 @@ class Wav2vec2Wrapper(nn.Module):
                 batch_size, sequence_length, hidden_size = x.size()
 
                 # apply SpecAugment along time axis
+                print('x.device', x.device)
                 if self.mask_time_prob > 0:
                     mask_time_indices = _compute_mask_indices(
                         (batch_size, sequence_length),
