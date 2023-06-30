@@ -41,7 +41,7 @@ class Wav2vecWrapper(nn.Module):
                     self.mask_time_prob,
                     self.mask_time_length,
                     min_masks=2,
-                    device=x.device
+                    # device=x.device
                 )
                 masked_indicies = mask_time_indices
                 flip_mask = torch.rand((batch_size, sequence_length), device=masked_indicies.device) > self.observe_time_prob
@@ -52,7 +52,7 @@ class Wav2vecWrapper(nn.Module):
                     (batch_size, hidden_size),
                     self.mask_feature_prob,
                     self.mask_feature_length,
-                    device=x.device,
+                    # device=x.device,
                     min_masks=1
                 )
                 wav2vec_z[mask_feature_indices[:, None].expand(-1, sequence_length, -1)] = 0
@@ -141,7 +141,7 @@ class Wav2vec2Wrapper(nn.Module):
                         self.mask_time_prob,
                         self.mask_time_length,
                         min_masks=2,
-                        device=x.device
+                        # device=x.device
                     )
                     masked_indicies = mask_time_indices & mask
                     flip_mask = torch.rand((batch_size, sequence_length), device=masked_indicies.device) > self.observe_time_prob
@@ -153,7 +153,7 @@ class Wav2vec2Wrapper(nn.Module):
                         (batch_size, hidden_size),
                         self.mask_feature_prob,
                         self.mask_feature_length,
-                        device=x.device,
+                        # device=x.device,
                         min_masks=1
                     )
                     x[mask_feature_indices[:, None].expand(-1, sequence_length, -1)] = 0
@@ -200,7 +200,7 @@ class Wav2vec2PretrainWrapper(nn.Module):
                 self.wav2vec2PT.config.mask_time_prob,
                 self.wav2vec2PT.config.mask_time_length,
                 min_masks=2,
-                device=x.device,
+                # device=x.device,
                 attention_mask=attn_mask
             )
         x = self.wav2vec2PT(x, mask_time_indices=mask_time_indices)#, attention_mask=attn_mask)
