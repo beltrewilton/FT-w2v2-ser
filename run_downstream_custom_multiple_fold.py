@@ -16,8 +16,8 @@ parser.add_argument('--nworkers', type=int, default=4)
 parser.add_argument('--precision', type=int, choices=[16, 32], default=32)
 parser.add_argument('--saving_path', type=str, default='downstream/checkpoints/custom')
 
-parser.add_argument('--datadir', type=str, default="/Users/beltre.wilton/apps/FT-w2v2-ser/Audio_16k")
-parser.add_argument('--labeldir', type=str, default="/Users/beltre.wilton/apps/FT-w2v2-ser/labels")
+parser.add_argument('--datadir', type=str, default="Audio_16k")
+parser.add_argument('--labeldir', type=str, default="labels")
 # parser.add_argument('--pretrained_path', type=str, default="/Users/beltre.wilton/apps/FT-w2v2-ser/wav2vec_large.pt")
 parser.add_argument('--pretrained_path', type=str, default=None)
 parser.add_argument('--model_type', type=str, choices=['wav2vec', 'wav2vec2'], default='wav2vec2')
@@ -25,7 +25,7 @@ parser.add_argument('--model_type', type=str, choices=['wav2vec', 'wav2vec2'], d
 parser.add_argument('--save_top_k', type=int, default=1)
 parser.add_argument('--num_exps', type=int, default=1)
 
-parser.add_argument('--outputfile', type=str, default=f"/Users/beltre.wilton/apps/FT-w2v2-ser/log_file_{time.time_ns()}.log")
+parser.add_argument('--outputfile', type=str, default=f"log_file_{time.time_ns()}.log")
 
 args = parser.parse_args()
 hparams = args
