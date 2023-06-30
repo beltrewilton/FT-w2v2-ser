@@ -143,6 +143,9 @@ class Wav2vec2Wrapper(nn.Module):
                         min_masks=2,
                         # device=x.device
                     )
+                    print('mask_time_indices', type(mask_time_indices))
+                    print('mask', type(mask))
+
                     masked_indicies = mask_time_indices & mask
                     flip_mask = torch.rand((batch_size, sequence_length), device=masked_indicies.device) > self.observe_time_prob
                     x[masked_indicies & flip_mask] = self.wav2vec2.masked_spec_embed.to(x.dtype)
